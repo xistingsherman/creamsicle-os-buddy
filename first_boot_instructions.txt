@@ -1,0 +1,76 @@
+==================================================================
+          ORANGE PI FIRST-BOOT INSTRUCTIONS
+==================================================================
+
+Congratulations! Your Orange Pi OS image is ready to be flashed.
+Below are the instructions to follow after the first boot.
+
+------------------------------------------------------------------
+1. PHYSICAL SETUP & BOOTING
+------------------------------------------------------------------
+a. Insert the flashed microSD card / USB drive into your Orange Pi.
+b. Connect your Orange Pi to power.
+c. Wait 1 to 2 minutes for the system to complete its first boot.
+   During this time, the Pi will automatically create your user,
+   apply hostnames, connect to Wi-Fi, and enable SSH services.
+
+------------------------------------------------------------------
+2. CONNECTING VIA SSH (HEADLESS)
+------------------------------------------------------------------
+Once booted, you can connect to your Pi over your local network
+without needing a monitor, keyboard, or mouse.
+
+Open a terminal (PowerShell, CMD, or Terminal) on your PC and run:
+  ssh <username>@<hostname>.local
+
+If the '.local' address does not resolve on your network, search
+for the Pi's IP address in your router's DHCP client list and run:
+  ssh <username>@<ip-address>
+
+------------------------------------------------------------------
+3. PRELOADED APPLICATIONS
+------------------------------------------------------------------
+If you chose to preload any applications (e.g., Firefox (~200 MB), VS Code (~350 MB), Kiwix (~60 MB), GoldenDict (~100 MB), Sudoku (~15 MB), or Stardew Valley (~250 MB)), they will automatically download and install in the
+background once the Pi boots up and connects to the internet.
+
+- View install logs:  cat /var/log/install_preloaded_apps.log
+- Check progress:     tail -f /var/log/install_preloaded_apps.log
+
+OFFLINE FALLBACK:
+If the Pi was offline during first boot, you can run the
+installation script manually once you have internet connection:
+  sudo /root/install_preloaded_apps.sh
+
+------------------------------------------------------------------
+4. INSTALLING OTHER APPS (FOR BEGINNERS)
+------------------------------------------------------------------
+If you want to install other applications later, you can do so
+very easily using these beginner-friendly methods:
+
+METHOD A: THE GRAPHICAL APP STORE (EASIEST)
+If you flashed a Desktop version of the operating system:
+1. Click the "App Store" or "Software" icon (usually looks like a
+   shopping bag or suitcase on your desktop dock/sidebar).
+2. Click the Search icon (magnifying glass) at the top.
+3. Type the name of the app you want (e.g., "vlc" for video player,
+   "gimp" for image editing, or "libreoffice" for office docs).
+4. Click the "Install" button next to the app.
+5. Enter your account password when prompted. The store will download
+   and install the app for you automatically!
+
+METHOD B: USING THE COMMAND LINE TERMINAL
+If you are logged in via SSH or prefer using the terminal:
+1. Open your Terminal program.
+2. Run this command to refresh the app catalog:
+     sudo apt update
+3. Run this command to download and install the app of your choice:
+     sudo apt install <app-name>
+   (For example, to install VLC player, type: sudo apt install vlc)
+4. Type your password, press Enter, and press 'Y' when prompted.
+
+*Note for Orange Pi (ARM64)*: Because the Orange Pi uses an ARM
+processor (different from normal Intel/AMD PCs), make sure any web
+downloads of applications (.deb files) are labeled for "ARM64"
+or "aarch64" architectures.
+
+==================================================================
