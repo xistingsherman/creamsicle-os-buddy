@@ -144,6 +144,11 @@ document.addEventListener('DOMContentLoaded', () => {
             closeModal(e.target.closest('.modal-overlay'));
         });
     });
+    document.querySelectorAll('.cancel-modal-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            closeModal(e.target.closest('.modal-overlay'));
+        });
+    });
 
     // --- STEP 1: BOARD SELECTION ---
     function initBoardsList() {
@@ -470,6 +475,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     modalCustomize.querySelectorAll('.close-modal-btn').forEach(btn => {
+        btn.addEventListener('click', revertCustomizeForm);
+    });
+
+    modalCustomize.querySelectorAll('.cancel-modal-btn').forEach(btn => {
         btn.addEventListener('click', revertCustomizeForm);
     });
 
@@ -822,17 +831,22 @@ document.addEventListener('DOMContentLoaded', () => {
                         // Check if post-boot setup script was generated
                         const instrAuto = document.getElementById('instructions-auto');
                         const instrManual = document.getElementById('instructions-manual');
-                        if (message && message.startsWith('SETUP_SCRIPT:')) {
-                            const scriptPath = message.substring('SETUP_SCRIPT:'.length);
+                        if (message && message.startsWith('SETUP_SCRIPTS:')) {
+                            const paths = message.substring('SETUP_SCRIPTS:'.length).split('|');
+                            const userScriptPath = paths[0];
+                            const configScriptPath = paths[1];
                             instrAuto.classList.add('hidden');
                             instrManual.classList.remove('hidden');
-                            document.getElementById('setup-script-path').textContent = scriptPath;
+                            document.getElementById('setup-script-path').textContent = userScriptPath;
                             document.getElementById('setup-script-command').textContent =
-                                '# From your PC, copy the script to the Pi via SCP:\n' +
-                                'scp "' + scriptPath + '" orangepi@<PI_IP>:/tmp/setup.sh\n\n' +
-                                '# Then SSH in and run it:\n' +
-                                'ssh orangepi@<PI_IP>\n' +
-                                'sudo bash /tmp/setup.sh';
+                                '# Step 1 — Copy both scripts to your Pi:\n' +
+                                'scp "' + userScriptPath + '" user@<PI_IP>:/tmp/setup_user.sh\n' +
+                                'scp "' + configScriptPath + '" user@<PI_IP>:/tmp/setup_config.sh\n\n' +
+                                '# Step 2 — SSH in and create the new user:\n' +
+                                'ssh user@<PI_IP>\n' +
+                                'sudo bash /tmp/setup_user.sh\n\n' +
+                                '# Step 3 — Log out, log back in as your new user, then finish setup:\n' +
+                                'sudo bash /tmp/setup_config.sh';
                         } else {
                             instrAuto.classList.remove('hidden');
                             instrManual.classList.add('hidden');
@@ -885,24 +899,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial counter sync
     updateAppSpaceCounter();
-
-    // --- MOTION TOGGLE ---
-    const btnMotionToggle = document.getElementById('btn-motion-toggle');
-    if (btnMotionToggle) {
-        // Respect prefers-reduced-motion on page load
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            document.body.classList.add('reduce-motion');
-            btnMotionToggle.querySelector('i').className = 'fa-solid fa-play';
-        }
-
-        btnMotionToggle.addEventListener('click', () => {
-            document.body.classList.toggle('reduce-motion');
-            const icon = btnMotionToggle.querySelector('i');
-            if (document.body.classList.contains('reduce-motion')) {
-                icon.className = 'fa-solid fa-play';
-            } else {
-                icon.className = 'fa-solid fa-pause';
-            }
-        });
-    }
 });

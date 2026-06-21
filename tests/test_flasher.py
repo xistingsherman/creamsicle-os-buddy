@@ -264,21 +264,76 @@ class TestDecompressXz:
 # _build_setup_script
 # ---------------------------------------------------------------------------
 
-class TestBuildSetupScript:
-    def _build(self, **overrides):
-        defaults = dict(
-            hostname="", username="", password="",
-            wifi_ssid="", wifi_password="", ssh_key=None,
-            enable_ssh=False, preload_apps=None,
-        )
-        defaults.update(overrides)
-        return flasher._build_setup_script(**defaults)
+class TestBuildUserScript:
+    def _build(self, username="", password=""):
+        return flasher._build_user_script(username, password)
 
     def test_starts_with_bash_shebang(self):
         assert self._build().startswith("#!/bin/bash")
 
     def test_includes_set_e(self):
         assert "set -e" in self._build()
+
+    def test_step_label_in_header(self):
+        assert "Step 1 of 2" in self._build()
+
+    def test_username_and_password_creates_user(self):
+        script = self._build(username="alice", password="secret")
+        assert "useradd" in script
+        assert "alice" in script
+        assert "alice:secret" in script
+
+    def test_username_without_password_skips_user_creation(self):
+        script = self._build(username="alice", password="")
+        assert "useradd" not in script
+
+    def test_removes_first_boot_lock_files(self):
+        script = self._build(username="alice", password="secret")
+        assert ".not_logged_in_yet" in script
+        assert ".firstboot" in script
+
+    def test_no_user_skips_lock_file_removal(self):
+        script = self._build(username="", password="")
+        assert ".not_logged_in_yet" not in script
+
+    def test_instructs_user_to_run_config_script(self):
+        script = self._build(username="alice", password="secret")
+        assert "setup_config.sh" in script
+
+    def test_does_not_contain_hostname_logic(self):
+        script = self._build(username="alice", password="secret")
+        assert "/etc/hostname" not in script
+
+    def test_does_not_contain_wifi_logic(self):
+        script = self._build(username="alice", password="secret")
+        assert "nmcli" not in script
+
+    def test_does_not_contain_ssh_daemon_logic(self):
+        script = self._build(username="alice", password="secret")
+        assert "systemctl enable ssh" not in script
+
+    def test_does_not_contain_apt_install(self):
+        script = self._build(username="alice", password="secret")
+        assert "apt-get install" not in script
+
+
+class TestBuildConfigScript:
+    def _build(self, **overrides):
+        defaults = dict(
+            hostname="", username="", wifi_ssid="", wifi_password="",
+            ssh_key=None, enable_ssh=False, preload_apps=None,
+        )
+        defaults.update(overrides)
+        return flasher._build_config_script(**defaults)
+
+    def test_starts_with_bash_shebang(self):
+        assert self._build().startswith("#!/bin/bash")
+
+    def test_includes_set_e(self):
+        assert "set -e" in self._build()
+
+    def test_step_label_in_header(self):
+        assert "Step 2 of 2" in self._build()
 
     def test_hostname_sets_etc_hostname(self):
         script = self._build(hostname="my-orangepi")
@@ -290,14 +345,8 @@ class TestBuildSetupScript:
         script = self._build(hostname="")
         assert "/etc/hostname" not in script
 
-    def test_username_and_password_creates_user(self):
-        script = self._build(username="alice", password="secret")
-        assert "useradd" in script
-        assert "alice" in script
-        assert "alice:secret" in script
-
-    def test_username_without_password_skips_user_creation(self):
-        script = self._build(username="alice", password="")
+    def test_does_not_contain_useradd(self):
+        script = self._build(username="alice")
         assert "useradd" not in script
 
     def test_ssh_key_written_to_authorized_keys(self):

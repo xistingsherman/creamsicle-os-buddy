@@ -224,11 +224,11 @@ def background_flash_thread(params):
     # 3. Customize the boot partition settings
     has_customization = any([hostname, username, password, wifi_ssid, wifi_password, ssh_key, enable_ssh, preload_apps])
 
-    setup_script_path = None
+    setup_script_paths = None
 
     if has_customization:
         update_state("decompressing", 90, "Applying configuration settings...")
-        customized, setup_script_path, diag_messages = flasher.customize_image(
+        customized, setup_script_paths, diag_messages = flasher.customize_image(
             uncompressed_img_path,
             hostname=hostname,
             username=username,
@@ -252,9 +252,9 @@ def background_flash_thread(params):
         elif stage == "writing":
             update_state("writing", progress, f"Writing image to drive: {progress}%")
         elif stage == "success":
-            if setup_script_path:
+            if setup_script_paths:
                 update_state("success", 100,
-                    f"SETUP_SCRIPT:{setup_script_path}")
+                    f"SETUP_SCRIPTS:{'|'.join(setup_script_paths)}")
             else:
                 update_state("success", 100, "Successfully flashed and configured!")
         elif stage == "error":

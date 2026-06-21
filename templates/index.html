@@ -9,28 +9,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="stars"></div>
-    <div class="stars2"></div>
     <!-- Orange Blossom Background Motifs -->
     <svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
         <defs>
-            <!-- Drop Shadow for realistic depth -->
             <filter id="blossom-shadow" x="-30%" y="-30%" width="160%" height="160%">
                 <feDropShadow dx="1" dy="2" stdDeviation="1.5" flood-color="#000000" flood-opacity="0.3" />
             </filter>
-
-            <!-- Orange Blossom Flower Motif -->
             <g id="orange-blossom-motif">
                 <g filter="url(#blossom-shadow)">
-                    <!-- 5 thin elongated white petals arranged radially -->
                     <ellipse cx="50" cy="24" rx="6" ry="20" fill="#ffffff" stroke="#f0ebe4" stroke-width="0.5" transform="rotate(0, 50, 50)" opacity="0.95"/>
                     <ellipse cx="50" cy="24" rx="6" ry="20" fill="#ffffff" stroke="#f0ebe4" stroke-width="0.5" transform="rotate(72, 50, 50)" opacity="0.95"/>
                     <ellipse cx="50" cy="24" rx="6" ry="20" fill="#ffffff" stroke="#f0ebe4" stroke-width="0.5" transform="rotate(144, 50, 50)" opacity="0.95"/>
                     <ellipse cx="50" cy="24" rx="6" ry="20" fill="#ffffff" stroke="#f0ebe4" stroke-width="0.5" transform="rotate(216, 50, 50)" opacity="0.95"/>
                     <ellipse cx="50" cy="24" rx="6" ry="20" fill="#ffffff" stroke="#f0ebe4" stroke-width="0.5" transform="rotate(288, 50, 50)" opacity="0.95"/>
-                    <!-- Yellow stamen center -->
                     <circle cx="50" cy="50" r="7" fill="#fbbf24" stroke="#f59e0b" stroke-width="1"/>
-                    <!-- Tiny stamen dots -->
                     <circle cx="50" cy="44" r="1.2" fill="#d97706"/>
                     <circle cx="54" cy="47" r="1.2" fill="#d97706"/>
                     <circle cx="53" cy="53" r="1.2" fill="#d97706"/>
@@ -38,60 +30,9 @@
                     <circle cx="46" cy="47" r="1.2" fill="#d97706"/>
                 </g>
             </g>
-
-            <radialGradient id="orange-fruit-grad" cx="35%" cy="35%" r="65%">
-                <stop offset="0%" stop-color="#ffedd5" />
-                <stop offset="35%" stop-color="#fb923c" />
-                <stop offset="85%" stop-color="#f97316" />
-                <stop offset="100%" stop-color="#ea580c" />
-            </radialGradient>
-
-            <linearGradient id="leaf-grad" x1="0" y1="1" x2="0" y2="0">
-            <linearGradient id="cone-grad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#fed7aa" />
-                <stop offset="100%" stop-color="#fdba74" />
-            </linearGradient>
-
-            <g id="ice-cream-cone-motif">
-                <!-- Drop shadow -->
-                <g filter="url(#blossom-shadow)">
-                    <!-- Cone -->
-                    <path d="M 32 55 L 68 55 L 50 88 Z" fill="url(#cone-grad)" stroke="#f97316" stroke-width="1" />
-                    
-                    <!-- Cone Pattern -->
-                    <!-- Left-to-right diagonals -->
-                    <path d="M 36 55 L 50 88" stroke="#ea580c" stroke-width="1" opacity="0.4" />
-                    <path d="M 42 55 L 50 73" stroke="#ea580c" stroke-width="1" opacity="0.4" />
-                    <path d="M 48 55 L 50 59" stroke="#ea580c" stroke-width="1" opacity="0.4" />
-                    <path d="M 32 55 L 45 80" stroke="#ea580c" stroke-width="1" opacity="0.4" />
-                    
-                    <!-- Right-to-left diagonals -->
-                    <path d="M 64 55 L 50 88" stroke="#ea580c" stroke-width="1" opacity="0.4" />
-                    <path d="M 58 55 L 50 73" stroke="#ea580c" stroke-width="1" opacity="0.4" />
-                    <path d="M 52 55 L 50 59" stroke="#ea580c" stroke-width="1" opacity="0.4" />
-                    <path d="M 68 55 L 55 80" stroke="#ea580c" stroke-width="1" opacity="0.4" />
-                    
-                    <!-- Bottom Orange sherbet scoop -->
-                    <circle cx="50" cy="50" r="18" fill="url(#orange-fruit-grad)" />
-                    <!-- Texture/shading for Orange scoop -->
-                    <path d="M 35 52 Q 40 56, 45 52 Q 50 56, 55 52 Q 60 56, 65 52" stroke="#ea580c" stroke-width="2" fill="none" opacity="0.3" />
-
-                    <!-- Top Vanilla/Cream scoop -->
-                    <circle cx="50" cy="32" r="15" fill="#fffdfa" stroke="rgba(124, 45, 18, 0.1)" stroke-width="0.5" />
-                    <!-- Cream textures -->
-                    <path d="M 38 34 Q 42 38, 46 34 Q 50 38, 54 34 Q 58 38, 62 34" stroke="#c2410c" stroke-width="1.5" fill="none" opacity="0.15" />
-
-                    <!-- Cherry on top -->
-                    <circle cx="50" cy="15" r="4.5" fill="#b91c1c" />
-                    <path d="M 50 15 Q 54 6, 58 4" stroke="#7c2d12" stroke-width="1.2" fill="none" stroke-linecap="round" />
-                </g>
-            </g>
         </defs>
     </svg>
 
-
-    
-    <!-- Orange Blossom Background -->
     <div class="blossom-container">
         <svg class="blossom blossom-1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#orange-blossom-motif"/></svg>
         <svg class="blossom blossom-2" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#orange-blossom-motif"/></svg>
@@ -101,33 +42,22 @@
         <svg class="blossom blossom-6" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#orange-blossom-motif"/></svg>
         <svg class="blossom blossom-7" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#orange-blossom-motif"/></svg>
         <svg class="blossom blossom-8" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#orange-blossom-motif"/></svg>
+        <svg class="blossom blossom-9" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#orange-blossom-motif"/></svg>
+        <svg class="blossom blossom-10" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#orange-blossom-motif"/></svg>
+        <svg class="blossom blossom-11" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#orange-blossom-motif"/></svg>
+        <svg class="blossom blossom-12" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#orange-blossom-motif"/></svg>
+        <svg class="blossom blossom-13" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#orange-blossom-motif"/></svg>
+        <svg class="blossom blossom-14" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#orange-blossom-motif"/></svg>
+        <svg class="blossom blossom-15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#orange-blossom-motif"/></svg>
+        <svg class="blossom blossom-16" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#orange-blossom-motif"/></svg>
     </div>
 
-    <!-- Swallow Background Motifs -->
-    <div class="bird-container">
-        <!-- Bird 1 -->
-        <svg class="bird bird-1" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 50 C25 35, 45 42, 50 48 C55 42, 75 35, 90 50 C70 54, 60 62, 52 75 C50 78, 50 78, 48 75 C40 62, 30 54, 10 50 Z" fill="var(--primary)" />
-        </svg>
-        <!-- Bird 2 -->
-        <svg class="bird bird-2" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 50 C25 35, 45 42, 50 48 C55 42, 75 35, 90 50 C70 54, 60 62, 52 75 C50 78, 50 78, 48 75 C40 62, 30 54, 10 50 Z" fill="var(--secondary)" />
-        </svg>
-        <!-- Bird 3 -->
-        <svg class="bird bird-3" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 50 C25 35, 45 42, 50 48 C55 42, 75 35, 90 50 C70 54, 60 62, 52 75 C50 78, 50 78, 48 75 C40 62, 30 54, 10 50 Z" fill="var(--primary)" />
-        </svg>
-    </div>
-    
     <div class="container">
         <!-- HEADER -->
         <header>
             <div class="logo">
                 <i class="fa-solid fa-microchip glow-icon"></i>
                 <h1>Creamsicle <span>OS Buddy</span></h1>
-                <button class="motion-toggle" id="btn-motion-toggle" aria-label="Toggle animations" title="Toggle animations">
-                    <i class="fa-solid fa-pause"></i>
-                </button>
             </div>
             <div class="status-indicator">
                 <span class="pulse-dot"></span>
@@ -175,7 +105,7 @@
                     <div class="config-badge" id="config-status-badge">
                         <i class="fa-solid fa-circle-check"></i> Applied
                     </div>
-                    <div id="main-app-space-badge" style="display: none; align-items: center; justify-content: center; gap: 6px; background: rgba(139, 92, 246, 0.1); border: 1px solid var(--primary); color: var(--text-violet); font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 20px; margin-top: 10px; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+                    <div id="main-app-space-badge" style="display: none; align-items: center; justify-content: center; gap: 6px; background: rgba(139, 92, 246, 0.1); border: 1px solid var(--primary); color: var(--text-violet); font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 20px; margin-top: 10px;">
                         <i class="fa-solid fa-hard-drive"></i> Apps Size: <span id="app-space-counter-main">0 MB</span>
                     </div>
                 </div>
@@ -246,7 +176,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="modal-btn secondary close-modal-btn">Cancel</button>
+                    <button class="modal-btn secondary cancel-modal-btn">Cancel</button>
                     <button class="modal-btn primary disabled" id="btn-confirm-os" disabled>Select</button>
                 </div>
             </div>
@@ -423,7 +353,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="modal-btn secondary close-modal-btn">Cancel</button>
+                    <button class="modal-btn secondary cancel-modal-btn">Cancel</button>
                     <button class="modal-btn primary" id="btn-save-customize">Save Configuration</button>
                 </div>
             </div>
@@ -445,7 +375,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="modal-btn secondary close-modal-btn">Cancel</button>
+                    <button class="modal-btn secondary cancel-modal-btn">Cancel</button>
                     <button class="modal-btn primary disabled" id="btn-confirm-storage" disabled>Select</button>
                 </div>
             </div>
