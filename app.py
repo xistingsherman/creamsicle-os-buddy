@@ -122,7 +122,7 @@ def background_flash_thread(params):
     board_id = params.get("board_id")
     download_url = params.get("download_url")
     local_image_path = params.get("local_image_path")
-    disk_number = int(params.get("disk_number"))
+    device = params.get("device", "").strip()
     
     hostname = params.get("hostname", "").strip()
     username = params.get("username", "").strip()
@@ -261,7 +261,7 @@ def background_flash_thread(params):
             update_state("error", 0, progress) # Progress contains error message
 
     try:
-        flasher.flash_to_drive(uncompressed_img_path, disk_number, flash_progress)
+        flasher.flash_to_drive(uncompressed_img_path, device, flash_progress)
     except Exception as e:
         update_state("error", 0, f"Flashing failed: {str(e)}")
     finally:
@@ -287,17 +287,16 @@ def flash():
     global flash_state
     
     data = request.json
-    try:
-        disk_number = int(data.get("disk_number"))
-    except (ValueError, TypeError):
-        return jsonify({"error": "Invalid disk number"}), 400
+    device = (data.get("device") or "").strip()
+    if not device:
+        return jsonify({"error": "No device specified"}), 400
 
     # Validate target disk safety on backend
     disks = flasher.list_disks()
-    target_disk = next((d for d in disks if d["number"] == disk_number), None)
+    target_disk = next((d for d in disks if d["device"] == device), None)
     if not target_disk:
         return jsonify({"error": "Target disk not found"}), 400
-        
+
     is_protected = target_disk.get("is_system") or target_disk.get("bus_type", "").lower() == "sata" or not target_disk.get("is_removable")
     if is_protected:
         return jsonify({"error": "Selected drive is protected (system drive, internal SATA drive, or non-removable). Flashing blocked for safety."}), 400
