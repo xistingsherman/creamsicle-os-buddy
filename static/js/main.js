@@ -685,7 +685,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="disk-info">
                             <i class="fa-solid ${iconClass}"></i>
                             <div class="disk-meta">
-                                <h4>PhysicalDrive ${d.number}: ${d.name} ${badge}</h4>
+                                <h4>${d.display_name}: ${d.name} ${badge}</h4>
                                 <span>Bus: ${d.bus_type} | Removable: ${d.is_removable ? 'Yes' : 'No'}</span>
                             </div>
                         </div>
@@ -717,7 +717,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnConfirmStorage.addEventListener('click', () => {
         if (selectedDisk) {
-            selectedStorageLabel.textContent = `Drive ${selectedDisk.number}: ${selectedDisk.name} (${selectedDisk.size_gb} GB)`;
+            selectedStorageLabel.textContent = `${selectedDisk.display_name}: ${selectedDisk.name} (${selectedDisk.size_gb} GB)`;
         }
         closeModal(modalStorage);
         validateInputs();
@@ -741,14 +741,14 @@ document.addEventListener('DOMContentLoaded', () => {
     btnFlash.addEventListener('click', () => {
         if (!selectedDisk) return;
         
-        const confirmMsg = `WARNING: Are you sure you want to write to PhysicalDrive ${selectedDisk.number} (${selectedDisk.name})?\n\nALL EXISTING DATA ON THIS DRIVE WILL BE PERMANENTLY DELETED.`;
+        const confirmMsg = `WARNING: Are you sure you want to write to ${selectedDisk.display_name} (${selectedDisk.name})?\n\nALL EXISTING DATA ON THIS DRIVE WILL BE PERMANENTLY DELETED.`;
         if (!confirm(confirmMsg)) return;
 
         const payload = {
             board_id: selectedLocalFile ? 'custom' : selectedBoard,
             download_url: selectedImage ? selectedImage.download_url : null,
             local_image_path: selectedLocalFile ? selectedLocalFile.path : null,
-            disk_number: selectedDisk.number,
+            device: selectedDisk.device,
             hostname: configApplied ? configData.hostname : '',
             username: configApplied ? configData.username : '',
             password: configApplied ? configData.password : '',
